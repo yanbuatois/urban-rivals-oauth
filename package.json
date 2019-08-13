@@ -1,0 +1,31 @@
+{
+  "name": "urban-rivals-oauth",
+  "version": "1.0.0",
+  "description": "Module making connection with the Urban Rivals OAuth API.",
+  "main": "UROAuth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanbuatois/urban-rivals-oauth.git"
+  },
+  "keywords": [
+    "Urban",
+    "Rivals",
+    "OAuth",
+    "API"
+  ],
+  "author": "Dracoctix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yanbuatois/urban-rivals-oauth/issues"
+  },
+  "homepage": "https://github.com/yanbuatois/urban-rivals-oauth#readme",
+  "dependencies": {
+    "oauth": "^0.9.15"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.6.3"
+  }
+}
