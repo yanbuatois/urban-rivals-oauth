@@ -48,7 +48,7 @@ A method is implemented in the class, which gives the authorize URL.
 const url = urApi.getAuthorizeUrl('https://myauthorizepage.tld/');
 ```
 
-When you have the verifier, you can get the access token, which allows to do API queries.
+When you have authorized the token, you can get the access token, which allows to do API queries.
 To authorize this token, you can simply call the `getAccessToken` method.
 
 ```js

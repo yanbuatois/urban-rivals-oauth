@@ -102,9 +102,10 @@ class UROAuth extends OAuth {
    * @param {Token} [requestToken] Request token
    * @return {Promise<Token>}
    */
-  getAccessToken({
-                   requestToken = this.requestToken
-                 }) {
+  getAccessToken(requestToken = this.requestToken) {
+    if (typeof requestToken === 'object' && requestToken.hasOwnProperty('requestToken')) {
+      requestToken = requestToken.requestToken;
+    }
     return new Promise((resolve, reject) => {
       this.getOAuthAccessToken(requestToken.token, requestToken.secret, (err, accessToken, accessSecret, results) => {
 
