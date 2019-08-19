@@ -52,9 +52,7 @@ When you have authorized the token, you can get the access token, which allows t
 To authorize this token, you can simply call the `getAccessToken` method.
 
 ```js
-urApi.getAccessToken({
-  userToken: 'verifier',
-}).then(() => {
+urApi.getAccessToken().then(() => {
   // Do stuff
 }).catch((err) => {
   // An error occurred while authorizing token. You should handle it.
