@@ -87,6 +87,6 @@ urApi.multipleQueries({
 
 Then you can do any call you are authorized to do. You can see the complete list on the UR API documentation (https://www.urban-rivals.com/api/developer/).
 
-You can find the complete module reference on the JSDoc available here: https://www.github.io/yanbuatois/urban-rivals-oauth/index.html
+You can find the complete module reference on the JSDoc available here: https://yanbuatois.github.io/urban-rivals-oauth/index.html
 
 If you have any problem or suggestion with this module, don't hesitate to submit issue or do pull requests.
