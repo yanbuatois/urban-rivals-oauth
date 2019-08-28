@@ -165,7 +165,7 @@ class UROAuth extends OAuth {
    * @param {Array<String>} [filters.contextFilter=[]] Filter on context sent by the server
    * @returns {Promise<QueryResult>} The query result
    */
-  async query(call, params = {}, { itemsFilter = [], contextFilter = [] }) {
+  async query(call, params = {}, { itemsFilter = [], contextFilter = [] } = {}) {
     return (await this.multipleQueries({
       call,
       params,
