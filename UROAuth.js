@@ -128,13 +128,17 @@ class UROAuth extends OAuth {
    * @param {Object} queries All queries to do
    * @param {String} queries.call Call name
    * @param {Object} [queries.params={}] params of the query
+   * @param {Array} [queries.contextFilter=[]] filter on the received context attributes
+   * @param {Array} [queries.itemsFilter=[]] filter on the received items attributes
    * @returns {Promise<Object<String,QueryResult>>} The queries results, indexed by the call name
    */
   multipleQueries(...queries) {
-    const queriesToDo = queries.map(({call, params = {}}) => {
+    const queriesToDo = queries.map(({call, params = {}, contextFilter = [], itemsFilter = []}) => {
       return {
         call,
         params,
+        contextFilter,
+        itemsFilter,
       };
     });
 
@@ -154,14 +158,19 @@ class UROAuth extends OAuth {
 
   /**
    * Do one query
-   * @param call Call name
-   * @param [params={}] Call params
+   * @param {String} call Call name
+   * @param {Object<String,*>} [params={}] Call params
+   * @param {Object} [filters={}] All filters you want on your query result
+   * @param {Array<String>} [filters.itemsFilter=[]] Filter on items sent by the server
+   * @param {Array<String>} [filters.contextFilter=[]] Filter on context sent by the server
    * @returns {Promise<QueryResult>} The query result
    */
-  async query(call, params = {}) {
+  async query(call, params = {}, { itemsFilter = [], contextFilter = [] }) {
     return (await this.multipleQueries({
       call,
-      params
+      params,
+      itemsFilter,
+      contextFilter,
     }))[call];
   }
 

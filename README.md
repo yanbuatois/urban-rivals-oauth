@@ -85,6 +85,8 @@ urApi.multipleQueries({
 });
 ```
 
+Note the query and multipleQueries methods take a parameter allowing to filter context and items element sent by the server directly server-side. It's useful to lighten the payload sent by the server and improve the performances of your app.
+
 Then you can do any call you are authorized to do. You can see the complete list on the UR API documentation (https://www.urban-rivals.com/api/developer/).
 
 You can find the complete module reference on the JSDoc available here: https://yanbuatois.github.io/urban-rivals-oauth/index.html
