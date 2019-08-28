@@ -1,6 +1,6 @@
 {
   "name": "urban-rivals-oauth",
-  "version": "1.1.1",
+  "version": "1.2",
   "description": "Module making connection with the Urban Rivals OAuth API.",
   "main": "UROAuth.js",
   "scripts": {
