@@ -2,20 +2,55 @@ import { URL } from 'url'
 import { OAuth } from 'oauth'
 
 /**
+ * Token info
+ * @typedef {Object} Token Token info
+ * @property {string} token Token public
+ * @property {string} secret Token secret
+ */
+
+/**
+ * Query result
+ * @typedef {Object} QueryResult Query result
+ * @property {Object<String,*>} context reply context
+ * @property {Object<String,*>} [items] reply items
+ */
+
+/**
  * This object allows to call API with javascript functions instead of passing call name as string.
  * For example, instead of doing `urOAuth.query('collections.getCollectionPage', { deckOnly: true })`, you can do `urOAuth.proxyClient.collections.getCollectionPage({ deckOnly: true })`
  * The parameters are the same as query parameters following the call name since the function uses proxies and bind.
  * The function still returns a promise. Please note as well that since proxies are used, you need to have an environment
  * which supports it. For node.js, you need node.js 6+. If you use it with a previous version, even with babel, it will likely fail.
  * @typedef {Object} UROAuthProxyClient Object allowing to directly call the API
- * @property {Object} characters Characters API
- * @property {Object} collections Collections API
- * @property {Object} forums Forums API
- * @property {Object} general General API
- * @property {Object} guilds Guilds API
- * @property {Object} market Market API
- * @property {Object} missions Missions API
- * @property {Object} players Players API
+ * @property {ApiCaller} characters Characters API
+ * @property {ApiCaller} collections Collections API
+ * @property {ApiCaller} forums Forums API
+ * @property {ApiCaller} general General API
+ * @property {ApiCaller} guilds Guilds API
+ * @property {ApiCaller} market Market API
+ * @property {ApiCaller} missions Missions API
+ * @property {ApiCaller} players Players API
+ */
+
+/**
+ * Object from proxyClient which allows direct API calls
+ * @typedef {Object<string, ApiCallerFunction>} ApiCaller Object from proxyClient which allows direct API calls
+ */
+
+/**
+ * @typedef {Function} ApiCallerFunction
+ * @param {Object<String,*>} [params={}] Call params
+ * @param {APIFilter} [filters={}] All filters you want on your query result
+ * @param {Array<String>} [filters.itemsFilter=[]] Filter on items sent by the server
+ * @param {Array<String>} [filters.contextFilter=[]] Filter on context sent by the server
+ * @returns {Promise<QueryResult>} The query result
+ */
+
+/**
+ * API Filters
+ * @typedef {Object} APIFilter API Filters
+ * @property {Array<String>} itemsFilter Filter on items sent by the server
+ * @property {Array<String>} contextFilter Filter on context sent by the server
  */
 
 /**
@@ -37,20 +72,6 @@ class UROAuth extends OAuth {
    * @readonly
    */
   static AUTHORIZE_URL = `${this.API_URL}/auth/authorize.php`
-
-  /**
-   * Token info
-   * @typedef {Object} Token Token info
-   * @property {string} token Token public
-   * @property {string} secret Token secret
-   */
-
-  /**
-   * Query result
-   * @typedef {Object} QueryResult Query result
-   * @property {Object<String,*>} context reply context
-   * @property {Object<String,*>} [items] reply items
-   */
 
   /**
    *
@@ -175,7 +196,7 @@ class UROAuth extends OAuth {
    * Do one query
    * @param {String} call Call name
    * @param {Object<String,*>} [params={}] Call params
-   * @param {Object} [filters={}] All filters you want on your query result
+   * @param {APIFilter} [filters={}] All filters you want on your query result
    * @param {Array<String>} [filters.itemsFilter=[]] Filter on items sent by the server
    * @param {Array<String>} [filters.contextFilter=[]] Filter on context sent by the server
    * @returns {Promise<QueryResult>} The query result
