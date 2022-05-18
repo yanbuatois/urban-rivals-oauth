@@ -247,7 +247,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="UROAuth.js.html">UROAuth.js</a>, <a href="UROAuth.js.html#line17">line 17</a>
+        <a href="UROAuth.js.html">UROAuth.js</a>, <a href="UROAuth.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -394,7 +394,292 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="UROAuth.js.html">UROAuth.js</a>, <a href="UROAuth.js.html#line10">line 10</a>
+        <a href="UROAuth.js.html">UROAuth.js</a>, <a href="UROAuth.js.html#line41">line 41</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="UROAuthProxyClient">UROAuthProxyClient</h4>
+
+
+
+
+<div class="description">
+    This object allows to call API with javascript functions instead of passing call name as string.For example, instead of doing `urOAuth.query('collections.getCollectionPage', { deckOnly: true })`, you can do `urOAuth.proxyClient.collections.getCollectionPage({ deckOnly: true })`The parameters are the same as query parameters following the call name since the function uses proxies and bind.The function still returns a promise. Please note as well that since proxies are used, you need to have an environmentwhich supports it. For node.js, you need node.js 6+. If you use it with a previous version, even with babel, it will likely fail.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>characters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Characters API</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>collections</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Collections API</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>forums</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Forums API</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>general</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">General API</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>guilds</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Guilds API</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>market</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Market API</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>missions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Missions API</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>players</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Players API</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="UROAuth.js.html">UROAuth.js</a>, <a href="UROAuth.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -430,7 +715,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Aug 28 2019 18:47:32 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed May 18 2022 23:46:43 GMT+0200 (heure d’été d’Europe centrale)
 </footer>
 
 <script> prettyPrint(); </script>

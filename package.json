@@ -1,10 +1,11 @@
 {
   "name": "urban-rivals-oauth",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "Module making connection with the Urban Rivals OAuth API.",
   "main": "UROAuth.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-doc": "jsdoc ./UROAuth.js -d docs"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "oauth": "^0.9.15"
   },
   "devDependencies": {
-    "jsdoc": "^3.6.3"
-  }
+    "jsdoc": "^3.6.10"
+  },
+  "type": "module"
 }

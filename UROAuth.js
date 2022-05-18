@@ -1,5 +1,22 @@
-const url = require('url');
-const { OAuth } = require('oauth');
+import { URL } from 'url'
+import { OAuth } from 'oauth'
+
+/**
+ * This object allows to call API with javascript functions instead of passing call name as string.
+ * For example, instead of doing `urOAuth.query('collections.getCollectionPage', { deckOnly: true })`, you can do `urOAuth.proxyClient.collections.getCollectionPage({ deckOnly: true })`
+ * The parameters are the same as query parameters following the call name since the function uses proxies and bind.
+ * The function still returns a promise. Please note as well that since proxies are used, you need to have an environment
+ * which supports it. For node.js, you need node.js 6+. If you use it with a previous version, even with babel, it will likely fail.
+ * @typedef {Object} UROAuthProxyClient Object allowing to directly call the API
+ * @property {Object} characters Characters API
+ * @property {Object} collections Collections API
+ * @property {Object} forums Forums API
+ * @property {Object} general General API
+ * @property {Object} guilds Guilds API
+ * @property {Object} market Market API
+ * @property {Object} missions Missions API
+ * @property {Object} players Players API
+ */
 
 /**
  * The Urban Rivals API
@@ -7,6 +24,20 @@ const { OAuth } = require('oauth');
  * @extends {OAuth}
  */
 class UROAuth extends OAuth {
+  /**
+   * query URL
+   * @type {String}
+   * @readonly
+   */
+  static API_URL = 'https://www.urban-rivals.com/api'
+
+  /**
+   * Authorization URL
+   * @type {String}
+   * @readonly
+   */
+  static AUTHORIZE_URL = `${this.API_URL}/auth/authorize.php`
+
   /**
    * Token info
    * @typedef {Object} Token Token info
@@ -30,46 +61,32 @@ class UROAuth extends OAuth {
    * @param {Function} [options.authorizeCallback=null] Callback called when authorized
    */
   constructor({
-                key,
-                secret,
-                algorithm = 'HMAC-SHA1',
-                authorizeCallback = null,
-              }) {
+    key,
+    secret,
+    algorithm = 'HMAC-SHA1',
+    authorizeCallback = null,
+  }) {
     super(
       'https://www.urban-rivals.com/api/auth/request_token.php',
-      'http://www.urban-rivals.com/api/auth/access_token.php',
+      'https://www.urban-rivals.com/api/auth/access_token.php',
       key,
       secret,
       '1.0',
       authorizeCallback,
       algorithm,
-    );
-
-    /**
-     * query URL
-     * @type {String}
-     * @private
-     */
-    this._apiUrl = 'https://www.urban-rivals.com/api/';
-
-    /**
-     * Authorization URL
-     * @type {String}
-     * @private
-     */
-    this._authorizeUrl = 'https://www.urban-rivals.com/api/auth/authorize.php';
+    )
 
     /**
      * Request token
      * @type {Token}
      */
-    this.requestToken = {};
+    this.requestToken = {}
 
     /**
      * Access token
      * @type {Token}
      */
-    this.accessToken = {};
+    this.accessToken = {}
   }
 
   /**
@@ -80,21 +97,21 @@ class UROAuth extends OAuth {
     return new Promise((resolve, reject) => {
       this.getOAuthRequestToken((err, token, token_secret) => {
         if (err) {
-          reject(err);
+          reject(err)
         }
         else {
 
           const tokenObject = {
             token: token,
-            secret: token_secret
-          };
+            secret: token_secret,
+          }
 
-          this.requestToken = tokenObject;
+          this.requestToken = tokenObject
 
-          resolve(tokenObject);
+          resolve(tokenObject)
         }
-      });
-    });
+      })
+    })
   }
 
   /**
@@ -104,23 +121,23 @@ class UROAuth extends OAuth {
    */
   getAccessToken(requestToken = this.requestToken) {
     if (typeof requestToken === 'object' && requestToken.hasOwnProperty('requestToken')) {
-      requestToken = requestToken.requestToken;
+      requestToken = requestToken.requestToken
     }
     return new Promise((resolve, reject) => {
       this.getOAuthAccessToken(requestToken.token, requestToken.secret, (err, accessToken, accessSecret, results) => {
 
         if(err)
-          reject(err);
+          reject(err)
         else {
           this.accessToken = {
             token: accessToken,
-            secret: accessSecret
-          };
+            secret: accessSecret,
+          }
 
-          resolve(this.token);
+          resolve(this.token)
         }
       })
-    });
+    })
   }
 
   /**
@@ -133,27 +150,25 @@ class UROAuth extends OAuth {
    * @returns {Promise<Object<String,QueryResult>>} The queries results, indexed by the call name
    */
   multipleQueries(...queries) {
-    const queriesToDo = queries.map(({call, params = {}, contextFilter = [], itemsFilter = []}) => {
-      return {
-        call,
-        params,
-        contextFilter,
-        itemsFilter,
-      };
-    });
+    const queriesToDo = queries.map(({call, params = {}, contextFilter = [], itemsFilter = []}) => ({
+      call,
+      params,
+      contextFilter,
+      itemsFilter,
+    }))
 
     const jsonEncodedQuery = JSON.stringify(queriesToDo);
     return new Promise((resolve, reject) => {
-      this.post(this._apiUrl, this.accessToken.token, this.accessToken.secret, {
-        "request": jsonEncodedQuery,
+      this.post(this.constructor.API_URL, this.accessToken.token, this.accessToken.secret, {
+        request: jsonEncodedQuery,
       }, 'application/x-www-form-urlencoded', (err, response, result) => {
         if (err) {
-          reject(err);
+          reject(err)
         } else {
-          resolve(JSON.parse(response));
+          resolve(JSON.parse(response))
         }
-      });
-    });
+      })
+    })
   }
 
   /**
@@ -171,7 +186,7 @@ class UROAuth extends OAuth {
       params,
       itemsFilter,
       contextFilter,
-    }))[call];
+    }))[call]
   }
 
 
@@ -181,16 +196,37 @@ class UROAuth extends OAuth {
    * @returns {string} The authorize URL
    */
   getAuthorizeUrl(callbackUrl = '') {
-    const authorizeUrl = url.parse(this._authorizeUrl);
-    authorizeUrl.query = {
-      'oauth_token': this.requestToken.token,
-    };
+    const authorizeUrl = new URL(this.constructor.AUTHORIZE_URL)
+    authorizeUrl.searchParams.set('oauth_token', this.requestToken.token)
     if (callbackUrl) {
-      authorizeUrl.query['oauth_callback'] = callbackUrl;
+      authorizeUrl.searchParams.set('oauth_callback', callbackUrl)
     }
 
-    return url.format(authorizeUrl);
+    return authorizeUrl.toString()
+  }
+
+  /**
+   * Creates a proxy client to call API with syntaxic sugar
+   * @returns {UROAuthProxyClient} The UROAuth proxy client
+   */
+  get proxyClient() {
+    return new Proxy({}, {
+      get: (target, callGroup) =>
+        new Proxy({}, {
+          get: (target, callName) => this.query.bind(this, `${callGroup}.${callName}`),
+          set: () => false,
+          deleteProperty: () => false,
+          ownKeys: () => [],
+          has: () => true,
+          defineProperty: () => false,
+        }),
+      set: () => false,
+      deleteProperty: () => false,
+      ownKeys: () => [],
+      has: () => true,
+      defineProperty: () => false,
+    })
   }
 }
 
-module.exports = UROAuth;
+export default UROAuth
